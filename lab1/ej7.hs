@@ -1,2 +1,3 @@
 sigLetra::Char->Char
-sigLetra
+sigLetra 'Z' = 'A'
+sigLetra l = succ l
