@@ -28,20 +28,20 @@ dosMayores x y z
 divMod::(Int, Int) -> (Int, Int)
 divMod (x, y) = (div x y, mod x y)
 
-sigLetra::Char->Char
+sigLetra :: Char -> Char
 sigLetra x
  |not (isAlpha x) = error "no es un char"
  |x == 'z' = 'a'
  |x == 'Z' = 'A'
  |otherwise = toEnum (fromEnum x + 1)
  
-digitoVal::Char->Int
-digitoVal c = fromEnum c - 48
+digitoVal :: Char -> Int
+digitoVal c = if isDigit c then fromEnum c - fromEnum '0' else error "no es digito"
 
 prod:: Int -> Int -> Int 
 prod n m 
  | n == m = n
- | n < m = n * prod(n+1) m
+ | n < m = n * prod(n + 1) m
  | otherwise = error "Numeros incorrectos"
 
 edad :: (Int , Int, Int) -> (Int, Int, Int) -> Int
@@ -49,6 +49,8 @@ edad (d, m, a) (d2, m2, a2)
  |a2 >= a && (m2 > m || (m2 == m && d2 >= d)) = a2 - a
  |a2 >= a && (m2 == m && d2 < d) || m2 < m = a2 - a - 1
  |otherwise = error "Fechas incorrectas"
+
+
 
 orExclusivo::Bool->Bool->Bool 
 orExclusivo b1 b2 
