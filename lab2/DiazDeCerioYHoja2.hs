@@ -20,4 +20,6 @@ perm :: Eq a => [a] -> [a] -> Bool
 perm xs ys = (dif xs ys == []) && (dif ys xs == [])
 
 --5--
-
+sonpermde1 :: [[a]] -> [[a]]
+sonpermde1 [] = []
+sonpermde1 xxs = filter (perm x xs) xs
