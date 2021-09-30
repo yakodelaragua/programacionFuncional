@@ -29,8 +29,27 @@ aDecimal :: [Int] -> Int
 aDecimal = foldl (\x y -> 10 * x + y) 0
 
 aDigitos :: Int -> [Int]
-aDigitos n = 
+aDigitos n
  | 0 <= n && n < 10 = [n]
- | otherwise =  
+ | otherwise =  aDigitos (div n 10) ++ [mod n 10]
 
 --7--
+decimalAbinario:: Int -> Int
+decimalAbinario = aDecimal . binario
+
+binario:: Int -> [Int]
+binario n
+ | n < 0 = error "Es negativo"
+ | 0 <= n && n <= 1 = [n]
+ | otherwise = binario (div n 2) ++ [mod n 2]
+
+binarioAdecimal:: Int -> Int
+binarioAdecimal = foldl1 (\x y -> x * 2 + y) . aDigitos
+
+--8--
+ordenada :: (Ord a) => [a] -> Bool
+ordenada [] = True
+ordenada [x] = True
+ordenada (x:xs) = x <= head xs && ordenada xs
+
+--9--
