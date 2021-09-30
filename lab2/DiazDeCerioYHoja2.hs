@@ -53,3 +53,29 @@ ordenada [x] = True
 ordenada (x:xs) = x <= head xs && ordenada xs
 
 --9--
+palabras :: String -> [String]
+palabras [] = []
+palabras s = takeWhile (/=' ') s : palabras (tail (dropWhile (/=' ') s))
+
+--10--
+posiciones :: (Eq a) => a -> [a] -> [Int]
+posiciones x xs = [p | (e,p) <- zip xs [0..], e == x]
+
+--11--
+paraTodo::Eq a=>(a->Bool)->[a]->Bool 
+paraTodo p l = length l == length (filter p l)
+
+--12--
+permutar :: (Eq a) => [a] -> [[a]]
+permutar [] = [[]]
+permutar p = [x:xs | x <- p, xs <- permutar (delete x p)]
+ where
+  delete x xs = (takeWhile (/=x) xs) ++ tail (dropWhile (/=x) xs) 
+
+--14--
+--[1,1,2]
+
+--17--
+repLong:: String -> IO()
+repLong s = putStr (s ++ "\n")
+
