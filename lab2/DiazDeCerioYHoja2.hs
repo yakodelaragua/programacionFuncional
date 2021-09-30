@@ -20,6 +20,17 @@ perm :: Eq a => [a] -> [a] -> Bool
 perm xs ys = (dif xs ys == []) && (dif ys xs == [])
 
 --5--
-sonpermde1 :: [[a]] -> [[a]]
+sonpermde1 :: Eq a => [[a]] -> [[a]]
 sonpermde1 [] = []
-sonpermde1 xxs = filter (perm x xs) xs
+sonpermde1 (x:xs) = filter (perm x) xs
+
+--6--
+aDecimal :: [Int] -> Int
+aDecimal = foldl (\x y -> 10 * x + y) 0
+
+aDigitos :: Int -> [Int]
+aDigitos n = 
+ | 0 <= n && n < 10 = [n]
+ | otherwise =  
+
+--7--
