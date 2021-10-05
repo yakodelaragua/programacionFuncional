@@ -79,3 +79,4 @@ permutar p = [x:xs | x <- p, xs <- permutar (delete x p)]
 repLong:: String -> IO()
 repLong s = putStr (s ++ "\n")
 
+
