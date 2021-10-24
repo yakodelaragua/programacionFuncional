@@ -1,4 +1,5 @@
 import Language.Haskell.TH.Syntax (Quasi(qAddDependentFile))
+import Data.Char
 par::Int->Bool
 par = even
 
@@ -67,3 +68,20 @@ leerLisEnt2 = do lis <- getLine
                          return ((read lis):resto)
 
 --Lee enteros por linea e imprime la suma
+leeYsuma :: IO ()
+leeYsuma = do lisEnt <-leerLisEnt2
+              print (sum lisEnt)
+
+--Convierte entrada.txt a mayusculas en salida.txt
+prog2 :: IO ()
+prog2 = do
+ s <- readFile "D:/Documents/Ingenieria informatica/5. Curso/PF/T10Ejemplos/entrada.txt"
+ writeFile "D:/Documents/Ingenieria informatica/5. Curso/PF/T10Ejemplos/salida.txt" (map toUpper s)
+ putStrLn "salida.txt es entrada.txt en mayúsculas"
+
+--Añade lo de entrada a salida al final del documento
+prog3 :: IO ()
+prog3 = do 
+ s <- readFile "D:/Documents/Ingenieria informatica/5. Curso/PF/T10Ejemplos/entrada.txt"
+ appendFile "D:/Documents/Ingenieria informatica/5. Curso/PF/T10Ejemplos/salida.txt" ("\n\n\t\t -- En mayúsculas queda: --\n\n" ++ (map toUpper s))
+ putStrLn "añadido a salida.txt"
