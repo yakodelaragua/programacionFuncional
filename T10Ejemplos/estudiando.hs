@@ -1,5 +1,4 @@
-import Language.Haskell.TH.Syntax (Quasi(qAddDependentFile))
-import Data.Char
+import Data.Char ( toUpper )
 par::Int->Bool
 par = even
 
