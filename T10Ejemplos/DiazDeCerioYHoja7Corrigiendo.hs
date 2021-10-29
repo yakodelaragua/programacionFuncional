@@ -33,6 +33,7 @@ escribeyleenum m = do
                     i <- getLine
                     return (read i)
 
+--Ella usa el show en vez de el print para mostrar un Int pero no me funciona con eso...
 pideNumeros :: IO()
 pideNumeros = do
     num1 <- escribeyleenum "Introduce un numero entero"
