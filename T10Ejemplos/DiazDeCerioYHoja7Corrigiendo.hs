@@ -1,6 +1,7 @@
 --1--
 --IO() -> no devuelve nada solo hace cosas
 --show solo para mostrar en pantalla algo que no sea un string, por ejemplo, un numero
+--TODO BIEN
 pideCadenas :: IO()
 pideCadenas = do
      putStrLn "Introduce una cadena"
@@ -10,6 +11,8 @@ pideCadenas = do
      if palabra == palabra2 then putStrLn "Las cadenas son iguales" else putStrLn "Las cadenas son diferentes"
 
 --2--
+--IO String -> devuelve un string
+--BIEN
 escribeylee :: String -> IO String 
 escribeylee m = do 
                  putStrLn m
@@ -23,6 +26,7 @@ pideCadenas' = do
     if p1 == p2 then putStrLn "Las cadenas son iguales" else putStrLn "Las cadenas son diferentes"
 
 --3--
+--read para transformar IO string en IO int
 escribeyleenum :: String -> IO Int
 escribeyleenum m = do
                     putStrLn m
