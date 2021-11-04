@@ -132,7 +132,3 @@ instance Show ExprArit where
 ej1 = Apli Mas (N 6) (Apli Prod (N 3) (N 4))
 ej2 = Apli Mas (Apli Prod (N 3) (N 2)) (N 12)
 ej3 = Apli Prod (Apli Div (N 5) (N 2)) (Apli Menos (N 8) (Apli Mas (N 2) (N 4)))
-
-  
-  
- 
