@@ -16,6 +16,9 @@ tamaño :: Arbin a -> Int
 tamaño (Hoja x) = 1
 tamaño (Unir ai ad) = tamaño ai + tamaño ad
 
+
+
+
 --map sobre arbol
 --p.e. maparbin (+3) a1 -> No se puede ejecutar sin un show pero modifica todas las hojas sin mas
 --p.e. maparbin ord a1
@@ -36,12 +39,12 @@ proff = foldarbin (const 0) g where g m n = 1 + max m n
 
 --instancias de arboles: deriving eq, deriving show
 --Lo he hecho yo, desastre
-mostrar :: Show a => Arbin a -> String
-mostrar (Hoja x) = show x
-mostrar (Unir ai ad) = mostrar ad ++ " * " ++ mostrar ai
+--mostrar :: Show a => Arbin a -> String
+--mostrar (Hoja x) = show x
+--mostrar (Unir ai ad) = mostrar ad ++ " * " ++ mostrar ai
 
-instance Show a => Show (Arbin a)
- where show = mostrar
+--instance Show a => Show (Arbin a)
+ --where show = mostrar
 
 
 --ARBOLES BINARIOS DE BUSQUEDA  
@@ -85,3 +88,22 @@ borrar x (Nod ai r ad)
 
 --une :: Arbus a -> Arbus a -> Arbus a
 --une xt yt = if vacio yt then xt else Nod xt (primeroArbol yt) (restoArbol yt)
+
+instance (Show a) => Show (Arbus a) where
+         show Vac = ""
+         show t = show' t 0 (maxLong t + 1)
+
+-- Definir 
+show' :: (Show a) => Arbus a -> Int -> Int -> String
+-- (show' t c a)  muestra el arbol t empezando en la columna c 
+-- y usando a caracteres para cada nodo.
+show' Vac _ _ = ""
+show' (Nod ai r ad) desde_col long_nodo 
+     = dibujo_ai ++ "\n" ++ dibujo_raiz ++ dibujo_ad
+       where dibujo_raiz = [' '| i<-[1..desde_col]] ++ show r
+             dibujo_ai = show' ai (desde_col+long_nodo) long_nodo
+             dibujo_ad = show' ad (desde_col+long_nodo) long_nodo
+
+maxLong :: (Show a) => Arbus a -> Int
+maxLong Vac = 0
+maxLong (Nod ai r ad) = maximum [(length.show) r,maxLong ai,maxLong ad]

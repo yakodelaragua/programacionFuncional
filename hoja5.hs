@@ -18,10 +18,10 @@ aplanar :: Arbus a -> [a]
 aplanar Vac = []
 aplanar (Nod ai r ad) = aplanar ai ++ [r] ++ aplanar ad
 
---numVerif :: (a -> Bool) -> Arbus a -> Int 
 
 --c--
 type ArPares a = Arbus (a,a)
+
 
 --2--
 data ArGen a = N a [ArGen a] deriving Show
@@ -35,17 +35,35 @@ ar2 = N 20 [N 12 [], ar1, N 36 [N 52 []]]
 --b--
 preorden :: ArGen a -> [a]
 preorden (N x []) = [x]
---preorden (N x [ar]) = x : map preorden [ar]
+preorden (N x a) = x : (concat . map preorden) a
+
+postorden :: ArGen a -> [a]
+postorden (N x []) = [x]
+postorden (N x a) = ((concat . map preorden) a) ++ [x]
+
+--c--
+esta :: Eq a => ArGen a -> a -> Bool
+esta ar elem = length (filter (==elem)(preorden ar)) > 0
+
 
 --3--
-data Arbol a b = Hoja a | Nodo (Arbol a b) b (Arbol a b) deriving Show
+data Arbol a b = Hoja a | Nodo (Arbol a b) b (Arbol a b) deriving Show 
+
 --a--
 type ExpA = Arbol Integer String
+
 --b--
 exp1 :: ExpA
 exp1 = Nodo (Nodo (Hoja 9) "-" (Nodo (Hoja 10) "+" (Hoja 6))) "+" (Nodo (Hoja 3) "*" (Hoja 5))
+
+expPrueba :: ExpA
+expPrueba = Nodo (Hoja 3) "*" (Hoja 5)
+
+expH :: ExpA
+expH = Hoja 2
+
 --c--
+--instance Show a => Show (Arbol a) 
+ --where show = mostrar
 
-
---4--
-data Arbin a = Hoja a | Unir (Arbin a) (Arbin a)
+--mostrar :: Show a => Arbol a -> String
