@@ -42,7 +42,7 @@ esta ar elem = length (filter (==elem)(preorden ar)) > 0
 
 
 --3----------------------------------------------
-data Arbol a b = Hoja a | Nodo (Arbol a b) b (Arbol a b) deriving Show 
+data Arbol a b = Hoja a | Nodo (Arbol a b) b (Arbol a b)
 
 --a--
 type ExpA = Arbol Integer String
@@ -61,5 +61,5 @@ expH = Hoja 2
 instance Show a => Show (Arbol a b) 
  where show = mostrar
 
-mostrar :: Show a => Arbol a -> String
-mostrar = "a"
+mostrar :: Show a => Arbol a b -> String
+mostrar exp1 = "ab"
