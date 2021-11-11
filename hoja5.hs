@@ -51,12 +51,6 @@ type ExpA = Arbol Integer String
 exp1 :: ExpA
 exp1 = Nodo (Nodo (Hoja 9) "-" (Nodo (Hoja 10) "+" (Hoja 6))) "+" (Nodo (Hoja 3) "*" (Hoja 5))
 
-expPrueba :: ExpA
-expPrueba = Nodo (Hoja 3) "*" (Hoja 5)
-
-expH :: ExpA
-expH = Hoja 2
-
 --c--
 instance Show a => Show (Arbol a b) 
  where show = mostrar
