@@ -58,7 +58,8 @@ expH :: ExpA
 expH = Hoja 2
 
 --c--
---instance Show a => Show (Arbol a) 
- --where show = mostrar
+instance Show a => Show (Arbol a b) 
+ where show = mostrar
 
---mostrar :: Show a => Arbol a -> String
+mostrar :: Show a => Arbol a -> String
+mostrar = "a"
