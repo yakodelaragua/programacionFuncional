@@ -1,30 +1,25 @@
---arboles de prueba
-ar11 :: Arbus Int
-ar11 = Nod (Nod Vac 2 Vac) 4 (Nod Vac 6 Vac)
-
-ar12 :: Arbus Int
-ar12 = Nod ar11 7 (Nod Vac 9 Vac)
-
---1--
+--1----------------------------------------------
 data Arbus a = Vac | Nod (Arbus a) a (Arbus a)  deriving (Eq, Ord, Show)
 
 --a--
-foldArbus :: (t1 -> t2 -> t1 -> t1) -> t1 -> Arbus t2 -> t1
+foldArbus :: (a -> b -> a -> a) -> a -> Arbus b -> a
 foldArbus f e Vac = e
 foldArbus f e (Nod ai r ad) = f (foldArbus f e ai) r (foldArbus f e ad)
 
 --b--
-aplanar :: Arbus a -> [a]
-aplanar Vac = []
-aplanar (Nod ai r ad) = aplanar ai ++ [r] ++ aplanar ad
-
+numVerif :: (a -> Bool) -> Arbus a -> Int
+numVerif p = foldArbus ar 0
+             where ar izq x der = if p x then 1 + izq + der else izq + der
 
 --c--
 type ArPares a = Arbus (a,a)
+numParesCorr :: Ord a => ArPares a -> Int 
+numParesCorr = numVerif esCorrecto where esCorrecto (x,y) = x < y
 
 
---2--
+--2----------------------------------------------
 data ArGen a = N a [ArGen a] deriving Show
+
 --a--
 ar1 :: ArGen Int
 ar1 = N 25 [N 35 [], N 45 [], N 55 []]
@@ -46,7 +41,7 @@ esta :: Eq a => ArGen a -> a -> Bool
 esta ar elem = length (filter (==elem)(preorden ar)) > 0
 
 
---3--
+--3----------------------------------------------
 data Arbol a b = Hoja a | Nodo (Arbol a b) b (Arbol a b) deriving Show 
 
 --a--

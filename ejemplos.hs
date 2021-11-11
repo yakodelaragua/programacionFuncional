@@ -1,4 +1,3 @@
-import Distribution.Simple.Utils (xargs)
 --Arboles definicion
 data Arbin a = Hoja a | Unir (Arbin a) (Arbin a)
 a1:: Arbin Int 
