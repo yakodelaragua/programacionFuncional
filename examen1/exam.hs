@@ -4,6 +4,14 @@ func elem [] = []
 func elem (x:xs) = if contiene elem (x:xs) then prim : func elem (tail sec) else [x:xs]
  where (prim,sec) = span (/=elem) (x:xs)
 
+funcpro :: (Eq a) => a -> [a] -> [[a]]
+funcpro elem [] = [] 
+funcpro elem (x:xs) 
+ | contiene elem (x:xs) && x /= elem = prim : funcpro elem (tail sec) 
+ | x == elem = funcpro elem (tail sec)
+ | otherwise = [x:xs]
+ where (prim,sec) = span (/=elem) (x:xs)
+
 contiene :: Eq a => a -> [a] -> Bool
 contiene n [] = False
 contiene n (x:xs)
@@ -23,4 +31,4 @@ anteriorA (d1, m1, a1) (d2, m2, a2)
  | otherwise = False
 
 --temperaturaMedia :: [(Double, (Int,Int,Int))] -> (Int, Int, Int) -> (Int, Int, Int) -> Double 
---temperaturaMedia =   
+--temperaturaMedia =  
