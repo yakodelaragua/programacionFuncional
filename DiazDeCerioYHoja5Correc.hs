@@ -1,4 +1,3 @@
-
 --1----------------------------------------------
 data Arbus a = Vac | Nod (Arbus a) a (Arbus a)  deriving (Eq, Ord, Show)
 
@@ -17,6 +16,9 @@ type ArPares a = Arbus (a,a)
 numParesCorr :: Ord a => ArPares a -> Int 
 numParesCorr = numVerif esCorrecto where esCorrecto (x,y) = x < y
 
+--Ejemplo para probar
+miarbol1 :: ArPares Int 
+miarbol1 = Nod (Nod Vac (3,8) Vac)(7,7)(Nod(Nod Vac (8,4) Vac)(9,10) Vac)
 
 --2----------------------------------------------
 data ArGen a = N a [ArGen a] deriving Show
@@ -36,6 +38,8 @@ preorden (N x a) = x : (concat . map preorden) a
 postorden :: ArGen a -> [a]
 postorden (N x []) = [x]
 postorden (N x a) = ((concat . map preorden) a) ++ [x]
+
+--su correcion en fotos 12/11/2021
 
 --c--
 esta :: Eq a => ArGen a -> a -> Bool
@@ -58,3 +62,4 @@ instance Show a => Show (Arbol a b)
 
 mostrar :: Show a => Arbol a b -> String
 mostrar exp1 = "ab"
+--foton 12/11/2021
