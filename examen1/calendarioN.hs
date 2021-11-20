@@ -10,7 +10,8 @@
 --       n = a�o cuyo calendario deseamos imprimir
 ------------------------------------------------------------------
 
-module Calendarios where
+module CalendarioN(printCalendario) where
+
 
 type Dibujo = [Linea]  -- cada dibujo es una lista de lineas 
 type Linea = [Char]    -- cada linea es una lista de caracteres
@@ -24,69 +25,90 @@ printDibujo dib = do
                    (putStr . concat . map (++"\n")) dib
 
 -- Imprime, con un numero de columnas, el calendario de un a�o: 
--- printCalendario :: Columna ->  Year -> IO()
--- printCalendario c a = printDibujo (calendario c a)
+printCalendario :: Columna ->  Year -> IO()
+printCalendario c a = printDibujo (calendario c a)
 
 
 -- Dibujo de un calendario (en c columnas) de un a�o dado:
--- calendario :: Columna -> Year -> Dibujo   
--- calendario c  =  bloque c . map dibujomes . meses
-
+calendario :: Columna -> Year -> Dibujo   
+calendario c  =  bloque c . map dibujomes . meses
 ---------------------------------------------------
 --  Define las siguientes funciones sobre dibujos:
 ---------------------------------------------------
+--dibujo1 de prueba
+d1 :: Dibujo
+d1 = dibujomes ("Enero", 2020, 5, 31)
+d2 :: Dibujo
+d2 = dibujomes("Febrero", 2020, 2, 28)
 
--- dibEsCorrecto :: Dibujo -> Bool   
+dibEsCorrecto :: Dibujo -> Bool   
+dibEsCorrecto [] = error "Dibujo vacio"
+dibEsCorrecto (x:xs)
+  | null xs = True
+  | otherwise = length x == length (head xs) && dibEsCorrecto xs
 -- comprueba que las lineas de un dibujo tienen igual longitud,
 -- debe dar un mensaje de error si el dibujo es vac�o ([]).
 
 
--- listaDibCorrectos ::[Dibujo] -> Bool 
+listaDibCorrectos ::[Dibujo] -> Bool 
+listaDibCorrectos [] = error "Lista vacia"
+listaDibCorrectos (x:xs) 
+ | null xs = True 
+ | otherwise = dibEsCorrecto x && listaDibCorrectos xs
 -- comprueba que los dibujos de la lista dada son correctos y 
 -- ademas tienen todos las mismas dimensiones.
 
 
--- alto :: Dibujo -> Int   
+alto :: Dibujo -> Int   
+alto = length
 -- Pre: dib es un dibujo correcto.
 -- alto dib da la altura de dib.
 
 
--- ancho :: Dibujo -> Int
+ancho :: Dibujo -> Int
+ancho (x:xs) = length x
 -- Pre: dib es un dibujo correcto.
 -- ancho dib da la anchura de dib.
 
 
 sobre :: Dibujo -> Dibujo -> Dibujo 
-sobre d1 d2 = d1 ++ d2 
+sobre d1 d2 = d1 ++ dibBlanco(1,25) ++ d2 
 -- Precondicion: los dibujos d1 y d2 tienen la misma anchura.
 -- sobre d1 d2 pone el dibujo d1 sobre el dibujo d2.
 
 
 alLado :: Dibujo -> Dibujo -> Dibujo   
 alLado [] [] = []
-alLado (d1:d1r) (d2:d2r) = (d1 ++ d2) : alLado d1r d2r
+alLado (d1:d1r) (d2:d2r) = (d1 ++ "   " ++ d2) : alLado d1r d2r
 -- Precondicion: los dibujos d1 y d2 tienen la misma altura.
 -- alLado d1 d2 da un dibujo con d1 a la izquierda de d2.
 
 
--- apilar :: [Dibujo] -> Dibujo
+apilar :: [Dibujo] -> Dibujo
+apilar (x:xs) = foldl sobre x xs
 -- apila s da el dibujo obtenido apilando todos los elementos de s
 --         (el primero de s queda en la cima de la pila).
 -- Si s no es una lista de dibujos correctos debe dar error.
 
 
--- extender :: [Dibujo] -> Dibujo
+extender :: [Dibujo] -> Dibujo
+extender (x:xs) = foldl alLado x xs
 -- extiende s da el dibujo obtenido al extender todos los elementos --            de s (el primero de s queda el m�s a la izquierda).
 -- Si s no es una lista de dibujos correctos debe dar error.
 
 
--- dibBlanco :: (Int,Int) -> Dibujo
+dibBlanco :: (Int,Int) -> Dibujo
+dibBlanco (0, an) = []
+dibBlanco (al, an) = blancos an : dibBlanco (al-1, an)
+ 
 -- Precondicion: al>0 && an>0.
 -- dibBlanco (al,an) devuelve el dibujo de caracteres blancos con 
 --                   altura al y anchura an
 
 
--- bloque :: Int -> [Dibujo] -> Dibujo
+bloque :: Int -> [Dibujo] -> Dibujo
+bloque n [] = []
+bloque n lisDib = apilar (extender (take n lisDib) : [bloque n (drop n lisDib)])
 -- bloque n lisDib es el dibujo formado al agrupar de n en n los
 --               dibujos de lisDib, extender cada sublista
 --               y luego apilar los resultados.
@@ -116,13 +138,14 @@ dibujomes (nm,a,pd,lm) = cabecera nm a ++ ajustardibujo pd lm
 
 -- Dibujo cabecera
 cabecera :: String -> Int -> Dibujo
-cabecera mes a = [" " ++ mes ++ " " ++ show a ++ ajusteblancos, blancos 25, " Lu Ma Mi Ju Vi Sa Do"]
+cabecera mes a = [" " ++ mes ++ " " ++ show a ++ ajusteblancos, blancos 21, " Lu Ma Mi Ju Vi Sa Do"]
  where ajusteblancos = blancos (25 - length mes - length (show a) - 6)
 
 -- Dibujo fechas completo
 ajustardibujo :: Int -> Int -> Dibujo
 ajustardibujo primdia longmes = ajustardibujoaux (agrupardibujos primdia longmes)
 
+-- casi lo mismo que extender
 -- Funcion recursiva para ajustar el dibujo al formato
 ajustardibujoaux :: [Linea] -> Dibujo
 ajustardibujoaux [] = []

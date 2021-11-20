@@ -12,6 +12,8 @@
 module Calendarios where
 import Data.Char
 
+d1 :: Dibujo
+d1 = dibujomes ("Enero", 2020, 5, 31)
 
 type Dibujo = [Linea]  -- cada dibujo es una lista de lineas 
 type Linea = String    -- cada linea es una lista de caracteres
