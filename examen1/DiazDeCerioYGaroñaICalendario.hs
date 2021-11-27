@@ -1,5 +1,5 @@
 ------------------------------------------------------------------
---  PRACTICA: CALENDARIO           --               PF  2019-20
+--  PRACTICA: CALENDARIO           --               PF  2020-21
 
 --  Nombre(s): Yara Diaz de Cerio, Iván Garoña   
 ------------------------------------------------------------------
@@ -9,11 +9,9 @@
 --       n = a�o cuyo calendario deseamos imprimir
 ------------------------------------------------------------------
 
-module Calendarios where
+module DiazDeCerioYGaroñaICalendario(printCalendario) where
 import Data.Char
 
-d1 :: Dibujo
-d1 = dibujomes ("Enero", 2020, 5, 31)
 
 type Dibujo = [Linea]  -- cada dibujo es una lista de lineas 
 type Linea = String    -- cada linea es una lista de caracteres
@@ -215,7 +213,7 @@ fechas pd lm = fechasrec pd 1 lm 42
 
 -- Dado un año, calcula si este es bisiesto o no
 bisiesto :: Int -> Bool
-bisiesto a = mod a 4 == 0 || mod a 100 == 0 && mod a 400 == 0
+bisiesto y = mod y 4 == 0 && (mod y 100 /= 0 || mod y 400 == 0)
 
 -- Lista con las longitudes de cada mes
 longitudesmeses :: Int -> [Int]
@@ -244,3 +242,4 @@ blancos b a
   | otherwise = blancos (" " ++ b) (a-1)
 
 --------------------------------------------------------------------
+
