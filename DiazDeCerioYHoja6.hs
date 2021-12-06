@@ -49,7 +49,7 @@ primero lis = head (lista lis)
 
 -- ej3 --
 -- a --
---module Conjunto1 where
+--module Conjunto1
 
 data Conj a = Co [a] deriving (Show, Eq)
 
