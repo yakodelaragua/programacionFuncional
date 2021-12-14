@@ -89,20 +89,33 @@ borrar x (Nod ai r ad)
 --une xt yt = if vacio yt then xt else Nod xt (primeroArbol yt) (restoArbol yt)
 
 instance (Show a) => Show (Arbus a) where
-         show Vac = ""
-         show t = show' t 0 (maxLong t + 1)
+  show = mostrar
+
+mostrar :: (Show a) => Arbus a -> String 
+mostrar ar = ver ar 0
+
+ver :: (Show a) => Arbus a -> Int -> String
+ver Vac n = " "
+ver (Nod ai r ad) n = ver ad (n + 5) ++ blancos n ++ show r ++ "\n" ++ ver ai (n + 5)
+
+blancos :: (Num t, Enum t) => t -> [Char]
+blancos n = [' ' | i <- [1..n]]
+
+-- instance (Show a) => Show (Arbus a) where
+--          show Vac = ""
+--          show t = show' t 0 (maxLong t + 1)
 
 -- Definir 
-show' :: (Show a) => Arbus a -> Int -> Int -> String
+--show' :: (Show a) => Arbus a -> Int -> Int -> String
 -- (show' t c a)  muestra el arbol t empezando en la columna c 
 -- y usando a caracteres para cada nodo.
-show' Vac _ _ = ""
-show' (Nod ai r ad) desde_col long_nodo 
-     = dibujo_ai ++ "\n" ++ dibujo_raiz ++ dibujo_ad
-       where dibujo_raiz = [' '| i<-[1..desde_col]] ++ show r
-             dibujo_ai = show' ai (desde_col+long_nodo) long_nodo
-             dibujo_ad = show' ad (desde_col+long_nodo) long_nodo
+-- show' Vac _ _ = ""
+-- show' (Nod ai r ad) desde_col long_nodo 
+--      = dibujo_ai ++ "\n" ++ dibujo_raiz ++ dibujo_ad
+--        where dibujo_raiz = [' '| i<-[1..desde_col]] ++ show r
+--              dibujo_ai = show' ai (desde_col+long_nodo) long_nodo
+--              dibujo_ad = show' ad (desde_col+long_nodo) long_nodo
 
-maxLong :: (Show a) => Arbus a -> Int
-maxLong Vac = 0
-maxLong (Nod ai r ad) = maximum [(length.show) r,maxLong ai,maxLong ad]
+-- maxLong :: (Show a) => Arbus a -> Int
+-- maxLong Vac = 0
+-- maxLong (Nod ai r ad) = maximum [(length.show) r,maxLong ai,maxLong ad]
